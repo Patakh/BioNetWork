@@ -1,0 +1,17 @@
+﻿
+@model BioNetWork.Models.Users.UsersModel
+<br/>
+<h2>List of User</h2>
+<a class="btn btn-primary btn-sm" href="/Users/Create"></a>
+<table>
+    <thead>
+        <tr>
+            <th>@Model.id</th>
+            <th>@Model.name</th>
+            <th>@Model.email</th>
+            <th>@Model.phone</th>
+            <th>@Model.address</th>
+            <th>@Model.date_of_registration</th>
+        </tr>
+    </thead>
+</table>
