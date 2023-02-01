@@ -4,6 +4,7 @@ using System.Data.SqlClient;
 using System.ComponentModel;
 using System.Diagnostics;
 using BioNetWork.Models.Users;
+using static BioNetWork.Models.Users.UsersModel;
 
 namespace BioNetWork.Controllers
 {
@@ -30,38 +31,91 @@ namespace BioNetWork.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
-        public UsersModel users = new UsersModel();
+        
         public IActionResult Users()
         {
-            String connectionString = "Data Source=DESKTOP-2EN7EE8\\SQLEXPRESS;Initial Catalog=users;Integrated Security=True";
-            using (SqlConnection connection = new SqlConnection(connectionString))
+            try
             {
-                connection.Open();
-                String sql = "SELECT * FROM personal_data";
-                using (SqlCommand command = new SqlCommand(sql, connection))
+                UsersModel user = new UsersModel
                 {
-                    using (SqlDataReader reader = command.ExecuteReader())
-                    {
+                    UserList = new List<Person>()
+                };
 
-                        while (reader.Read())
+                String connectionString = "Data Source=DESKTOP-2EN7EE8\\SQLEXPRESS;Initial Catalog=Users;Integrated Security=True";
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    connection.Open();
+                    String sql = "SELECT * FROM users";
+                    using (SqlCommand command = new SqlCommand(sql, connection))
+                    {
+                        using (SqlDataReader reader = command.ExecuteReader())
                         {
                            
-
-                            users.id = "" + reader.GetInt32(0);
-                            users.name = reader.GetString(1);
-                            users.email = reader.GetString(2);
-                            users.phone = reader.GetString(3);
-                            users.address = reader.GetString(4);
-                            users.date_of_registration = reader.GetDateTime(5).ToString();
-                           
+                            while (reader.Read())
+                            {
+                                UsersModel person = new UsersModel
+                                {
+                                    person = new Person()
+                                };
+                                person.person.Id = "" + reader.GetInt32(0);
+                                person.person.Name = reader.GetString(1);
+                                person.person.Email = reader.GetString(2);
+                                person.person.Phone = reader.GetString(3);
+                                person.person.Adres = reader.GetString(4);
+                                person.person.DateRegistration = reader.GetDateTime(5).ToString();
+                                user.UserList.Add(person.person);
+                            }
                         }
+                    }
+                    connection.Close();
+                }
+                return View("Users", user);
+            }
+            catch(Exception ex)
+            {
+                return View(new ErrorViewModel { });
+            }
+        }
+        public IActionResult Create()
+        {
+            return View();
+
+        }
+        public IActionResult CreatePerson(Person person)
+        {
+
+            person.Name = Request.Form["Name"];
+            person.Email = Request.Form["Email"];
+            person.Phone = Request.Form["Phone"];
+            person.Adres = Request.Form["Adres"];
+
+            try
+            {
+                String connectionString = "Data Source=DESKTOP-2EN7EE8\\SQLEXPRESS;Initial Catalog=Users;Integrated Security=True";
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    connection.Open();
+                    String sql = "INSERT INTO users" +
+                                  "(name, email, phone, address) VALUES" +
+                                  "(@name, @email, @phone, @address);";
+                    using(SqlCommand command= new SqlCommand(sql, connection))
+                    {
+                        command.Parameters.AddWithValue("@name", person.Name);
+                        command.Parameters.AddWithValue("@email", person.Email);
+                        command.Parameters.AddWithValue("@phone", person.Phone);
+                        command.Parameters.AddWithValue("@address", person.Adres);
+                        command.ExecuteNonQuery();
 
                     }
+                    connection.Close();
                 }
-                connection.Close();
+               
             }
-            return View("Users", users);
+            catch(Exception ex)
+            {
+               
+            }
+            return View("Users");
         }
-
     }
 }
