@@ -1,8 +1,10 @@
 ﻿@model BioNetWork.Models.Users.UsersModel.Person
-<br />
-<h2 class="my-3">Новый пользователь</h2>
 
-<form method="post" action="CreatePerson">
+<br />
+<h2 class="my-3">Изменения данных пользователя</h2>
+
+<form method="post" action="EditPersonData">
+    <input type="hidden" name="Id" value="@Model.Id" />
     <div class="row justify-content-center mb-4">
         <div class="col-5">
             <div class="row mb-3">
@@ -10,7 +12,7 @@
                     <div class="input-group-text">
                         <label class="form-label">Имя </label>
                     </div>
-                    <input class="form-control" name="Name"/>
+                    <input class="form-control" name="Name" value="@Model.Name" />
                 </div>
             </div>
             <div class="row mb-3">
@@ -18,7 +20,7 @@
                     <div class="input-group-text">
                         <label class="form-label">Email</label>
                     </div>
-                    <input class="form-control" name="Email"/>
+                    <input class="form-control" name="Email" value="@Model.Email" />
                 </div>
             </div>
             <div class="row mb-3">
@@ -26,7 +28,7 @@
                     <div class="input-group-text">
                         <label class="form-label">Телефон</label>
                     </div>
-                    <input class="form-control" name="Phone"/>
+                    <input class="form-control" name="Phone" value="@Model.Phone" />
                 </div>
             </div>
             <div class="row mb-3">
@@ -34,12 +36,12 @@
                     <div class="input-group-text">
                         <label class="form-label">Адрес</label>
                     </div>
-                    <input class="form-control" name="Adres"/>
+                    <input class="form-control" name="Adres" value="@Model.Adres" />
                 </div>
             </div>
             <div class="row mb-3">
                 <div class="offset-sm-3 col-sm-3 b-grid">
-                    <button type="submit" class="btn btn-outline-primary">Добавить</button>
+                    <button type="submit" class="btn btn-outline-primary">Готово</button>
                 </div>
                 <div class="col-sm-3 b-grid">
                     <a class="btn btn-outline-primary" asp-controller="Home" asp-action="Users" role="button">Назад</a>
