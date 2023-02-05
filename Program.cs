@@ -1,4 +1,10 @@
+using BioNetWork.Models;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddDbContext<AuthDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("AuthConnectionString")));
+builder.Services.AddIdentity<IdentityUser,IdentityRole>().AddEntityFrameworkStores<AuthDbContext>();
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
@@ -17,11 +23,18 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
+app.UseAuthentication();
 
 app.UseAuthorization();
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapControllerRoute(
+        name: "area",
+        pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
+    endpoints.MapControllerRoute(
+        name: "default",
+        pattern: "{controller=Home}/{action=MyPublications}/{id?}");
+});
 
-app.MapControllerRoute(
-    name: "default",
-    pattern: "{controller=Home}/{action=MyPublications}/{id?}");
 
 app.Run();
