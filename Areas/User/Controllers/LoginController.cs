@@ -1,45 +1,71 @@
 ﻿using BioNetWork.Areas.User.Models;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using NuGet.Protocol;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using NuGet.Protocol.Plugins;
-using static BioNetWork.Areas.User.Models.RegisterModel;
 
 namespace BioNetWork.Areas.User.Controllers
 {
-    public class LoginController : LoginModel
+    public class LoginController : Controller
     {
-        private SignInManager<IdentityUser> sigInManager;
-        public LoginController(SignInManager<IdentityUser> sigInManager)
-        {
-            this.sigInManager = sigInManager;
-        }
-
         [Area("User")]
+        [HttpGet]
         public IActionResult Login()
         {
-            return View("~/Areas/User/Pages/Login.cshtml");
+            return View("~/Areas/User/Views/Login.cshtml");
         }
 
         [Area("User")]
         [HttpPost]
-        public async Task<IActionResult> Login(Login login)
+        public IActionResult Login(LoginModel loginData)
         {
-
             if (ModelState.IsValid)
             {
-                var identityResult = await sigInManager.PasswordSignInAsync(login.Email, login.Password, login.RememberMe, true);
-                var identityResult = await sigInManager.UserManager.Users.
+                List<UserModel> userModelsList = new List<UserModel>();
+                UserModel newUserModel = new UserModel();
+                newUserModel.Email = "abdulpatakh@gmail.com1";
+                newUserModel.Password = "ppxaagas1";
+                newUserModel.DataRegister = DateTime.Now;
+                newUserModel.Id = Guid.NewGuid();
+                userModelsList.Add(newUserModel);
 
-                if (identityResult.Succeeded)
+                newUserModel.Email = "abdulpatakh@gmail.com2";
+                newUserModel.Password = "ppxaagas2";
+                newUserModel.DataRegister = DateTime.Now;
+                newUserModel.Id = Guid.NewGuid();
+                userModelsList.Add(newUserModel);
+
+                newUserModel.Email = "abdulpatakh@gmail.com3";
+                newUserModel.Password = "ppxaagas3";
+                newUserModel.DataRegister = DateTime.Now;
+                newUserModel.Id = Guid.NewGuid();
+                userModelsList.Add(newUserModel);
+
+                UserModel UserModelData = new UserModel();
+
+                foreach (UserModel userItem in userModelsList)
                 {
-
+                    if (userItem.Password == loginData.Password && userItem.Email == loginData.Email)
+                    {
+                       return UserAccout(userItem);
+                    }
+                    else
+                    {
+                        ModelState.AddModelError("", "Гуляй поле");
+                        return View("~/Areas/User/Views/Login.cshtml", loginData);
+                    };
 
                 }
-
-                ModelState.AddModelError("", "*");
             }
-            return View("~/Areas/User/Pages/Login.cshtml", login);
+
+            ModelState.AddModelError("", "Гуляй поле");
+            return View("~/Areas/User/Views/Login.cshtml", loginData);
+        }
+
+        [Area("User")]
+        [HttpPost]
+        public IActionResult UserAccout(UserModel loginData)
+        {
+            return View("~/Areas/User/Views/UserAccount.cshtml", loginData);
         }
     }
 }

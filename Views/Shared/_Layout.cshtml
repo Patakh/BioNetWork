@@ -1,6 +1,4 @@
-﻿@using Microsoft.AspNetCore.Identity
-@inject SignInManager<IdentityUser> SignInManager
-
+﻿
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -24,39 +22,36 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     @*if (SignInManager.IsSignedIn(User))
                     {*@
-                        <ul class="navbar-nav flex-grow-1">
+                    <ul class="navbar-nav flex-grow-1">
 
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="MyPublications">Мои публикации</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Friends">Друзья</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Users">Users</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="Blogs" asp-controller="Home" asp-action="Index">Блоги</a>
-                            </li>
-                            
-                        </ul>
-                        <ul class="navbar-nav d-flex justify-content-end">
-                            <li class="nav-item">
-                                <a class="btn btn-primary" asp-area="User" asp-controller="Home" asp-action="Logout">Выход</a>
-                            </li>
-                        </ul>
-                   @*}
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="MyPublications">Мои публикации</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Friends">Друзья</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Users">Users</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="Blogs" asp-controller="Home" asp-action="Index">Блоги</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="btn btn-primary" asp-area="User" asp-controller="Home" asp-action="Logout">Выход</a>
+                        </li>
+                    </ul>
+                    @*}
                     else
-                    {*@ 
-                        <ul class="navbar-nav d-flex justify-content-end flex-grow-1">
-                            <li class="nav-item">
-                                <a class="btn btn-primary" asp-area="User" asp-controller="Register" asp-action="Register">Регистрация</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="btn btn-primary" asp-area="User" asp-controller="Login" asp-action="Login">Вход</a>
-                            </li>
-                        </ul>
-                    @*}*@ 
+                    {*@
+                    <ul class="navbar-nav d-flex justify-content-end flex-grow-1">
+                        <li class="nav-item">
+                            <a class="btn btn-primary" asp-area="User" asp-controller="Register" asp-action="Register">Регистрация</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="btn btn-primary" asp-area="User" asp-controller="Login" asp-action="Login">Вход</a>
+                        </li>
+                    </ul>
+                    @*}*@
 
                 </div>
             </div>

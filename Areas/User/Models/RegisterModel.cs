@@ -5,10 +5,9 @@ using System.ComponentModel.DataAnnotations;
 
 namespace BioNetWork.Areas.User.Models
 {
-    public class RegisterModel : Controller
-    {
-        public class Register
+    public class RegisterModel
         {
+            public Guid Id { get; set; }
             [Required]
             [DataType(DataType.EmailAddress)]
             [MaxLength(25)]
@@ -23,8 +22,6 @@ namespace BioNetWork.Areas.User.Models
             [MaxLength(25)]
             [Compare(nameof(Password), ErrorMessage = "Пароли не совподают")]
             public string CnnfirmPassword { get; set; }
-
-        }
 
     }
 }

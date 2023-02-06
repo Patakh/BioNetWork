@@ -1,53 +1,42 @@
 ﻿using BioNetWork.Areas.User.Models;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using static BioNetWork.Areas.User.Models.RegisterModel;
+using Microsoft.Win32;
 
 namespace BioNetWork.Areas.User.Controllers
 {
-    public class RegisterController : RegisterModel
+    public class RegisterController : Controller
     {
-        private UserManager<IdentityUser> userManager;
-        private SignInManager<IdentityUser> sigInManager;
-        public RegisterController(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> sigInManager)
-        {
-            this.userManager = userManager;
-            this.sigInManager = sigInManager;
-            this.userManager.PasswordValidators.Clear();
-        }
         [Area("User")]
         [HttpGet]
         public IActionResult Register()
         {
-            return View("~/Areas/User/Pages/Register.cshtml");
+            return View("~/Areas/User/Views/Register.cshtml");
         }
 
         [Area("User")]
         [HttpPost]
-        public async Task<IActionResult> Register(Register register)
+        public IActionResult Register(RegisterModel registerData)
         {
-            if (ModelState.IsValid)
+            if(ModelState.IsValid)
             {
-                var user = new IdentityUser()
-                {
-                    UserName = register.Email,
-                    Email = register.Email
-                };
-                var result = await userManager.CreateAsync(user, register.Password);
-
-                if (result.Succeeded)
-                {
-                    await sigInManager.SignInAsync(user, false);
-
-                    return View("~/Areas/Blogs/Views/Home/Index.cshtml");
-                }
-                foreach (var error in result.Errors)
-                {
-                    ModelState.AddModelError("", error.Description);
-                }
+                UserModel newUser = new UserModel();
+                newUser.Email = registerData.Email;
+                newUser.Password = registerData.Password;
+                newUser.Id = Guid.NewGuid();
+                newUser.DataRegister = DateTime.Now;
+                return UserAccout(newUser);
             }
-            return View("~/Areas/User/Pages/Register.cshtml", register);
+
+            ModelState.AddModelError("", "Гуляй поле");
+
+            return View("~/Areas/User/Views/Register.cshtml", registerData);
         }
 
+        [Area("User")]
+        [HttpPost]
+        public IActionResult UserAccout(UserModel loginData)
+        {
+            return View("~/Areas/User/Views/UserAccount.cshtml", loginData);
+        }
     }
 }
