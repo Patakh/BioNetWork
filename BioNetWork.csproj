@@ -8,26 +8,19 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Areas\Blogs\Data\**" />
     <Compile Remove="Areas\Blogs\Models\**" />
-    <Compile Remove="Areas\User\Data\**" />
     <Compile Remove="ViewModel\**" />
-    <Content Remove="Areas\Blogs\Data\**" />
     <Content Remove="Areas\Blogs\Models\**" />
-    <Content Remove="Areas\User\Data\**" />
     <Content Remove="ViewModel\**" />
-    <EmbeddedResource Remove="Areas\Blogs\Data\**" />
     <EmbeddedResource Remove="Areas\Blogs\Models\**" />
-    <EmbeddedResource Remove="Areas\User\Data\**" />
     <EmbeddedResource Remove="ViewModel\**" />
-    <None Remove="Areas\Blogs\Data\**" />
     <None Remove="Areas\Blogs\Models\**" />
-    <None Remove="Areas\User\Data\**" />
     <None Remove="ViewModel\**" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.13" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="7.0.2" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.2" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="7.0.2">
       <PrivateAssets>all</PrivateAssets>
