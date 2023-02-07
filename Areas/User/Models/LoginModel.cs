@@ -5,20 +5,23 @@ using System.ComponentModel.DataAnnotations;
 
 namespace BioNetWork.Areas.User.Models
 {
-    public class LoginModel : Controller
+    public class LoginModel
     {
-        public class Login
-        {
-            [Required]
-            [DataType(DataType.EmailAddress)]
-            [MaxLength(25)]
-            [MinLength(5)]
-            public string Email { get; set; }
-            [Required]
-            [MinLength(5)]
-            [MaxLength(25)]
-            public string Password { get; set; }
-            public bool RememberMe { get; set; }
-        }
+        public Guid Id { get; set; }
+        [Required]
+        [DataType(DataType.EmailAddress)]
+        [MinLength(5)]
+        [Display(Name = "Email")]
+        public string Email { get; set; }
+        [Required]
+        [MinLength(5)]
+
+        [Display(Name = "Пароль")]
+        public string Password { get; set; }
+        [Display(Name = "Запомнить?")]
+        public bool RememberMe { get; set; }
+        public string ReturnUrl { get; set; } = "";
+
     }
+
 }

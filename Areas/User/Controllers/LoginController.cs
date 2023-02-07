@@ -1,45 +1,51 @@
 ﻿using BioNetWork.Areas.User.Models;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using NuGet.Protocol;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Internal;
 using NuGet.Protocol.Plugins;
-using static BioNetWork.Areas.User.Models.RegisterModel;
+using System.Linq;
 
 namespace BioNetWork.Areas.User.Controllers
 {
-    public class LoginController : LoginModel
+    public class LoginController : Controller
     {
-        private SignInManager<IdentityUser> sigInManager;
-        public LoginController(SignInManager<IdentityUser> sigInManager)
-        {
-            this.sigInManager = sigInManager;
-        }
-
+       
         [Area("User")]
+        [HttpGet]
         public IActionResult Login()
         {
-            return View("~/Areas/User/Pages/Login.cshtml");
+            return View("~/Areas/User/Views/Login.cshtml");
         }
 
         [Area("User")]
         [HttpPost]
-        public async Task<IActionResult> Login(Login login)
+        public IActionResult Login(LoginModel loginData)
         {
 
             if (ModelState.IsValid)
             {
-                var identityResult = await sigInManager.PasswordSignInAsync(login.Email, login.Password, login.RememberMe, true);
-                var identityResult = await sigInManager.UserManager.Users.
-
-                if (identityResult.Succeeded)
-                {
-
-
-                }
-
-                ModelState.AddModelError("", "*");
+               
+                  /* if (idPerson != 0)
+                   {
+                       return UserAccout();
+                   }
+                   else
+                   {
+                       ModelState.AddModelError("", "Гуляй поле");
+                       return View("~/Areas/User/Views/Login.cshtml", loginData);
+                   };*/
             }
-            return View("~/Areas/User/Pages/Login.cshtml", login);
+            else
+                ModelState.AddModelError("", "Гуляй поле");
+            return View("~/Areas/User/Views/Login.cshtml", loginData);
+        }
+
+        [Area("User")]
+        [HttpPost]
+        public IActionResult UserAccout(UserModel loginData)
+        {
+            return View("~/Areas/User/Views/UserAccount.cshtml", loginData);
         }
     }
 }
