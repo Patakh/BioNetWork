@@ -11,6 +11,6 @@
         public string Gender { get; set; }
         public string Role { get; set; }
         public DateTime DataRegister { get; set; } 
-        public byte[]? Avatar { get; set; }
+        public byte[] Avatar { get; set; }
     }
 }
