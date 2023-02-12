@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using Microsoft.Win32;
 using Microsoft.Data.SqlClient;
+using System.Data;
 
 namespace BioNetWork.Areas.User.Controllers
 {
@@ -20,37 +21,42 @@ namespace BioNetWork.Areas.User.Controllers
         [HttpPost]
         public  IActionResult Register(RegisterModel registerData)
         {
-            if (ModelState.IsValid)
-            {
-                UserModel newUser = new UserModel();
-                newUser.Email = registerData.Email;
-                newUser.Password = registerData.Password;
-                newUser.DataRegister = DateTime.Now;
-              
-                    using (SqlConnection connection = new SqlConnection(ConnectionStrings))
-                    {
-                        connection.Open();
-                        string sql = "INSERT INTO users_data" +
-                            "(Email, Password, DataRegister) VALUES "+
-                            "(@Email, @Password, @DataRegister);";
-                        using (SqlCommand command = new SqlCommand(sql, connection))
-                        {
-                            command.Parameters.AddWithValue("@Email", newUser.Email);
-                            command.Parameters.AddWithValue("@Password", newUser.Password);
-                            command.Parameters.AddWithValue("@DataRegister", newUser.DataRegister);
+             if (ModelState.IsValid)
+             {
+                 UserModel newUser = new UserModel();
+                 newUser.Email = registerData.Email;
+                 newUser.Password = registerData.Password;
+                 newUser.DataRegister = DateTime.Now;
 
-                            command.ExecuteNonQuery();
-                        }
-                        connection.Close();
-                    }
-                    return UserAccout(newUser);
-              
-            }
-            else
-            {
-                ModelState.AddModelError("", "Гуляй поле");
-                return View("~/Areas/User/Views/Register.cshtml", registerData);
-            }
+                 string sqlExpression = "InsertUser";
+                 using (SqlConnection connection = new SqlConnection(ConnectionStrings))
+                 {
+                     connection.Open();
+                     SqlCommand command = new SqlCommand(sqlExpression, connection);
+                     command.CommandType = CommandType.StoredProcedure;
+                     SqlParameter passwordParam = new SqlParameter
+                     {
+                         ParameterName = "@Password",
+                         Value = newUser.Password
+                     };
+                     command.Parameters.Add(passwordParam);
+                     SqlParameter emailParam = new SqlParameter
+                     {
+                         ParameterName = "@Email",
+                         Value = newUser.Email
+                     };
+                     command.Parameters.Add(emailParam);
+                     newUser.Id = (Guid)command.ExecuteScalar();
+                     connection.Close();
+                     return UserAccout(newUser);
+                 }
+             }
+             else
+             {
+                 ModelState.AddModelError("", "Гуляй поле");
+                 return View("~/Areas/User/Views/Register.cshtml", registerData);
+             }
+
         }
 
         [Area("User")]

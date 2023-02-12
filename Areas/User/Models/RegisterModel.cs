@@ -21,7 +21,7 @@ namespace BioNetWork.Areas.User.Models
             [MinLength(5)]
             [MaxLength(25)]
             [Compare(nameof(Password), ErrorMessage = "Пароли не совподают")]
-            public string CnnfirmPassword { get; set; }
+            public string ConfirmPassword { get; set; }
 
     }
 }
