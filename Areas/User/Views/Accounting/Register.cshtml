@@ -1,0 +1,27 @@
+﻿@model BioNetWork.Areas.User.Models.RegisterModel
+@{
+    ViewData["Title"] = "Регистрация";
+}
+<h1 class="align-items-center">Регистрация</h1>
+<form method="post" action="Register">
+    <div asp-validation-summary="All" class="text-danger"></div>
+    <div class="mb-3">
+        <label class="form-label" asp-for="Email">Email</label>
+        <input type="email" class="form-control" asp-for="Email" />
+    </div>
+    <div class="mb-3">
+        <label class="form-label" asp-for="Password">Пароль</label>
+        <input type="password" class="form-control" asp-for="Password" />
+    </div>
+    <div class="mb-3">
+        <label class="form-label" asp-for="ConfirmPassword">Ввдите пароль ещо раз</label>
+        <input type="password" class="form-control" asp-for="ConfirmPassword" />
+    </div>
+    <div class="mb-3">
+        <button type="submit" class="btn btn-primary w-100">Зарегистрираться</button>
+    </div>
+</form>
+<h6>Или</h6>
+<div class="mb-3 mt-3">
+    <a class="btn btn-success w-100" asp-area="User" asp-controller="Login" asp-action="Login">Вход в существующий</a>
+</div>

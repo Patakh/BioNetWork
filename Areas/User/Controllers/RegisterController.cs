@@ -14,7 +14,7 @@ namespace BioNetWork.Areas.User.Controllers
         [HttpGet]
         public IActionResult Register()
         {
-            return View("~/Areas/User/Views/Register.cshtml");
+            return View("~/Areas/User/Views/Accounting/Register.cshtml");
         }
 
         [Area("User")]
@@ -54,7 +54,7 @@ namespace BioNetWork.Areas.User.Controllers
              else
              {
                  ModelState.AddModelError("", "Гуляй поле");
-                 return View("~/Areas/User/Views/Register.cshtml", registerData);
+                 return View("~/Areas/User/Views/Accounting/Register.cshtml", registerData);
              }
 
         }
@@ -63,7 +63,7 @@ namespace BioNetWork.Areas.User.Controllers
         [HttpPost]
         public IActionResult UserAccout(UserModel loginData)
         {
-            return View("~/Areas/User/Views/UserAccount.cshtml", loginData);
+            return View("~/Areas/User/Views/Account/UserAccount.cshtml", loginData);
         }
     }
 }

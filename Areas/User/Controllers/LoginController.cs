@@ -23,7 +23,7 @@ namespace BioNetWork.Areas.User.Controllers
         [HttpGet]
         public IActionResult Login()
         {
-            return View("~/Areas/User/Views/Login.cshtml");
+            return View("~/Areas/User/Views/Accounting/Login.cshtml");
         }
 
         [Area("User")]
@@ -57,9 +57,7 @@ namespace BioNetWork.Areas.User.Controllers
                     var userData = command.ExecuteReader();
                     if (userData.Read())
                     {
-
                         UserModel user = new UserModel();
-
                         user.Id = userData.GetGuid(0);
                         user.Name = userData.GetValue(1).ToString();
                         user.Email = userData.GetString(2);
@@ -68,11 +66,13 @@ namespace BioNetWork.Areas.User.Controllers
                         user.Age = userData.GetValue(5).ToString();
                         user.Gender = userData.GetValue(6).ToString();
                         user.DataRegister = userData.GetDateTime(7);
+
                         try
                         {
                             user.Avatar = (byte[])userData.GetValue(8);
                         }
                         catch { };
+
                         user.Role = userData.GetValue(9).ToString();
                         connection.Close();
                         return UserAccout(user);
@@ -83,20 +83,20 @@ namespace BioNetWork.Areas.User.Controllers
                         connection.Close();
 
                         ModelState.AddModelError("", "Гуляй поле");
-                        return View("~/Areas/User/Views/Login.cshtml", loginData);
+                        return View("~/Areas/User/Views/Accounting/Login.cshtml", loginData);
                     }
                 }
             }
             else
                 ModelState.AddModelError("", "Гуляй поле");
-            return View("~/Areas/User/Views/Login.cshtml", loginData);
+            return View("~/Areas/User/Views/Accounting/Login.cshtml", loginData);
         }
 
         [Area("User")]
         [HttpPost]
         public IActionResult UserAccout(UserModel loginData)
         {
-            return View("~/Areas/User/Views/UserAccount.cshtml", loginData);
+            return View("~/Areas/User/Views/Account/UserAccount.cshtml", loginData);
         }
     }
 }

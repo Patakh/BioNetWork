@@ -29,4 +29,12 @@
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.11" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Areas\User\Controllers\MyPublication\" />
+    <Folder Include="Areas\User\Controllers\Friends\" />
+    <Folder Include="Areas\User\Controllers\MyProfile\" />
+    <Folder Include="Areas\User\Controllers\Accouting\" />
+    <Folder Include="wwwroot\Новая папка\" />
+  </ItemGroup>
+
 </Project>
