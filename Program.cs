@@ -1,5 +1,4 @@
 using BioNetWork.Models;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -7,6 +6,10 @@ var builder = WebApplication.CreateBuilder(args);
 //builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("AuthConnectionString")));
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+
+builder.Services.AddAuthentication("cookie")
+ .AddCookie("cookie");
 
 var app = builder.Build();
 
@@ -17,22 +20,20 @@ if (!app.Environment.IsDevelopment())
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
-
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
-app.UseRouting();
-app.UseAuthentication();
 
-app.UseAuthorization();
+app.UseRouting();
 app.UseEndpoints(endpoints =>
 {
     endpoints.MapControllerRoute(
         name: "area",
         pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
+
     endpoints.MapControllerRoute(
         name: "default",
-        pattern: "{area=User}/{controller=Login}/{action=Login}/{id?}");
+        pattern: "{area=User}/{controller=Login}/{action=LoginStart}/{id?}");
 });
 
 
