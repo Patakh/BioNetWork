@@ -1,10 +1,12 @@
-﻿@model BioNetWork.Areas.User.Models.LoginModel
+﻿@model BioNetWork.Models.VMLogin
+@{
+    Layout = "_LayoutAcc";
+}
 @{
     ViewData["Title"] = "Вход";
 }
 <h1 class="align-items-center">Вход</h1>
-<form method="post" asp-action="Login">
-    <div asp-validation-summary="All" class="text-danger"></div>
+<form method="post" asp-action="Login"> 
     <div class="mb-3">
         <label asp-for="Email" class="form-label m-0">Email</label>
         <input type="email" asp-for="Email" autocomplete="off" autofocus="true" class="form-control border-top-0 border-start-0 border-end-0 form-text" placeholder="Введите Email" />
@@ -12,7 +14,7 @@
     </div>
     <div class="mb-3">
         <label asp-for="Password" class="form-label m-0">Пароль</label>
-        <input type="password" autocomplete="new-password" minlength="5" action="20" asp-for="Password" class="form-control border-top-0 border-start-0 border-end-0 form-text" placeholder="Введите пароль" />
+        <input type="password" autocomplete="new-password" action="20" asp-for="Password" class="form-control border-top-0 border-start-0 border-end-0 form-text" placeholder="Введите пароль" />
         <span asp-validation-for="Password" class="text-danger"></span>
     </div>
     <div class="mb-3">
@@ -27,13 +29,5 @@
 </form>
 <h6>Или</h6>
 <div class="mb-3 mt-3">
-    <a class="btn btn-success w-100" asp-area="User" asp-controller="Register" asp-action="Register">Зарегистрироваться</a>
-</div>
-<script>
-  /*  window.onload = function () {
-        var elements = document.getElementsByTagName('input');
-        for (var i = 0; i < elements.length; i++) {
-            elements[i].value = null;
-        }
-    };*/
-</script>
+    <a class="btn btn-success w-100" asp-area="User" asp-controller="Register" asp-action="Register">Создайть аккаунт</a>
+</div> 
