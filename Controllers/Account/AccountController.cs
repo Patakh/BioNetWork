@@ -32,7 +32,8 @@ public class AccountController : Controller
                 new Claim("OtherProperties", "Example Role"),
                 new Claim("Department","HR"),
                 new Claim("Admin","true"),
-                new Claim("Manager","true")
+                new Claim("Manager","true"),
+                new Claim("EmploymentDate","12.08.2023")
             };
 
             ClaimsIdentity identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
