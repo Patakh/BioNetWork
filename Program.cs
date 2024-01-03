@@ -1,19 +1,24 @@
+using BioNetWork.Data;
+using BioNetWork.Model.Account;
 using BioNetWork.Model.HR.Policy;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-//builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("ConnectionStrings")));
+builder.Services.AddDbContext<AppDbContext>(options => options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+builder.Services.AddIdentity<User, IdentityRole>()
+                .AddEntityFrameworkStores<AppDbContext>();
 
 // Add services to the container.
-builder.Services.AddControllersWithViews();
-
+builder.Services.AddControllersWithViews(); 
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme, option =>
      {
-         option.Cookie.Name = CookieAuthenticationDefaults.AuthenticationScheme;
-         option.ExpireTimeSpan = TimeSpan.FromSeconds(20);
+         option.Cookie.Name = CookieAuthenticationDefaults.AuthenticationScheme; 
      });
 
 builder.Services.AddAuthorization(option =>
@@ -46,6 +51,7 @@ app.UseRouting();
 app.UseAuthentication();
 
 app.UseAuthorization();
+
 
 app.MapControllerRoute(
     name: "default",

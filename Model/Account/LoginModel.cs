@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
-namespace BioNetWork.Models;
-public class VMLogin
+namespace BioNetWork.Model.Account;
+public class LoginModel
 {
     [Required]
     [EmailAddress]
